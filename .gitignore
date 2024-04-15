@@ -1,0 +1,17 @@
+# Project exclude paths
+/.gradle/
+/adapters/build/
+/adapters/build/classes/kotlin/main/
+/adapters/grpc/build/
+/adapters/grpc/build/classes/kotlin/main/
+/annotation/build/
+/annotation/build/classes/kotlin/main/
+/core/build/
+/core/build/classes/kotlin/main/
+/lwjgl3/build/
+/processor/build/
+/processor/build/classes/kotlin/main/
+# Project exclude paths
+/adapters/rest/build/
+/build/
+/server/build/

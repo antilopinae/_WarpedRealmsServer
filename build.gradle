@@ -1,0 +1,128 @@
+buildscript {
+  repositories {
+    mavenCentral()
+    maven { url 'https://maven.pkg.jetbrains.space/public/p/ktor/eap' }
+    maven { url 'https://s01.oss.sonatype.org' }
+    maven{ url 'https://mvnrepository.com/artifact/io.ktor/ktor-bom'}
+    mavenLocal()
+    google()
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+    maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
+  }
+  dependencies {
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    classpath "com.google.protobuf:protobuf-gradle-plugin:$protobufPluginVersion"
+  }
+}
+
+plugins {
+  id("io.ktor.plugin") version "2.3.9"
+  id("com.google.protobuf") version "0.9.4"
+}
+
+apply plugin: 'io.ktor.plugin'
+
+allprojects {
+  apply plugin: 'eclipse'
+  apply plugin: 'idea'
+  apply plugin: 'java'
+  apply plugin: 'io.ktor.plugin'
+  apply plugin: 'com.google.protobuf'
+}
+
+configure(subprojects) {
+  apply plugin: 'java-library'
+  apply plugin: 'kotlin'
+  apply plugin: 'java'
+  repositories {
+    mavenCentral() // Or any other repository you're using
+  }
+  sourceCompatibility = 17
+  compileJava {
+    options.incremental = true
+  }
+
+  kotlin {
+    jvmToolchain(17)
+  }
+}
+
+subprojects {
+  // Загрузить свойства из файла gradle.properties
+  ext.loadProperties = {
+    def propertiesFile = rootProject.file('gradle.properties')
+    if (propertiesFile.exists()) {
+      println "Loading properties from ${propertiesFile}"
+      def properties = new Properties()
+      properties.load(propertiesFile.newDataInputStream())
+      properties.each { key, value ->
+        project.ext.set(key, value)
+      }
+    }
+  }
+
+  // Вызвать функцию загрузки свойств
+  loadProperties()
+
+  version = '1.0.0'
+  ext.appName = 'WarpedRealmsLootLabyrinth'
+  repositories {
+    mavenCentral()
+    maven{ url 'https://mvnrepository.com/artifact/io.ktor/ktor-bom'}
+    maven { url 'https://maven.pkg.jetbrains.space/public/p/ktor/eap' }
+    maven { url 'https://s01.oss.sonatype.org' }
+    // You may want to remove the following line if you have errors downloading dependencies.
+    mavenLocal()
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+    maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
+    maven { url 'https://jitpack.io' }
+  }
+  dependencies {
+    testImplementation "org.junit.jupiter:junit-jupiter:5.8.2"
+    testImplementation "org.mockito:mockito-core:4.6.1"
+  }
+//  test {
+//    useJUnitPlatform()
+//  }
+//  testing {
+//  }
+//  configurations {
+//    integrationTestImplementation.extendsFrom implementation
+//    integrationTestRuntimeOnly.extendsFrom runtimeOnly
+//  }
+//  tasks.named("check") {
+//    dependsOn (testing.suites.integrationTest)
+//  }
+}
+
+ktor {
+  fatJar {
+    archiveFileName.set("fat.jar")
+  }
+  repositories {
+    mavenCentral()
+    maven{ url 'https://mvnrepository.com/artifact/io.ktor/ktor-bom'}
+  }
+//  docker {
+//    jreVersion.set(JavaVersion.VERSION_17)
+//    localImageName.set("sample-docker-image")
+//    imageTag.set("0.0.1-preview")
+//    portMappings.set(listOf(
+//      io.ktor.plugin.features.DockerPortMapping(
+//        80,
+//        8080,
+//        io.ktor.plugin.features.DockerPortMappingProtocol.TCP
+//      )
+//    ))
+//
+//    externalRegistry.set(
+//      io.ktor.plugin.features.DockerImageRegistry.dockerHub(
+//        appName = provider { "ktor-app" },
+//        username = providers.environmentVariable("DOCKER_HUB_USERNAME"),
+//        password = providers.environmentVariable("DOCKER_HUB_PASSWORD")
+//      )
+//    )
+//  }
+}
+
+eclipse.project.name = 'WarpedRealmsLootLabyrinth' + '-parent'

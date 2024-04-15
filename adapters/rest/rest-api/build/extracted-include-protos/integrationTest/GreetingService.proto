@@ -1,0 +1,42 @@
+syntax = "proto3";
+package com.grpc;
+option java_multiple_files=true;
+
+enum Action{
+  ATTACK=0;
+}
+
+message InputMap{
+  bytes input_x=1;
+  bytes input_y=2;
+  bytes input_z=3;
+
+  bytes mouse_x=4;
+  bytes mouse_y=5;
+}
+
+message InputMessage{
+  InputMap input=1;
+  repeated Action actions=2;
+}
+
+message HelloRequest{
+  string token=1;
+  InputMessage message=2;
+//  map<string, string> bagOfTricks=6;
+}
+
+message PlayerPosition{
+  string player=1;
+  float position_x=2;
+  float position_y=3;
+}
+
+message HelloResponse{
+  string token=1;
+  repeated PlayerPosition positions=2;
+}
+
+service GreetingService{
+  rpc greeting(stream HelloRequest) returns (stream HelloResponse);
+}

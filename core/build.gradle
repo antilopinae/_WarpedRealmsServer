@@ -1,0 +1,73 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+    id("com.google.devtools.ksp").version("1.9.22-1.0.16")
+}
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+eclipse.project.name = appName + '-core'
+
+dependencies {
+  implementation(project(":adapters"))
+  implementation(project(":adapters:grpc"))
+
+  implementation(project(":annotation"))
+  implementation(project(":processor"))
+
+  implementation("com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion")
+  implementation("com.badlogicgames.gdx-controllers:gdx-controllers-desktop:$gdxControllersVersion")
+  implementation("com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion")
+
+  implementation("com.badlogicgames.gdx:gdx-box2d:$gdxVersion")
+  implementation("com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop")
+
+  implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutinesVersion")
+
+    //bad logic
+  implementation("com.badlogicgames.gdx:gdx:$gdxVersion")
+  implementation("com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion")
+  implementation("com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop")
+
+    //ktx
+  implementation("io.github.libktx:ktx-actors:$ktxVersion")
+  implementation("io.github.libktx:ktx-ai:$ktxVersion")
+  implementation("io.github.libktx:ktx-app:$ktxVersion")
+  implementation("io.github.libktx:ktx-ashley:$ktxVersion")
+  implementation("io.github.libktx:ktx-assets:$ktxVersion")
+  implementation("io.github.libktx:ktx-collections:$ktxVersion")
+  implementation("io.github.libktx:ktx-json:$ktxVersion")
+  implementation("io.github.libktx:ktx-log:$ktxVersion")
+  implementation("io.github.libktx:ktx-math:$ktxVersion")
+  implementation("io.github.libktx:ktx-scene2d:$ktxVersion")
+  implementation("io.github.libktx:ktx-tiled:$ktxVersion")
+  implementation("io.github.libktx:ktx-box2d:$ktxVersion")
+  implementation("io.github.libktx:ktx-graphics:$ktxVersion")
+
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${kotlinxCoroutinesVersion}")
+
+  //core
+  implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
+  implementation("io.ktor:ktor-server-netty-jvm:$ktorVersion")
+
+  //logger dependency
+  implementation("org.slf4j:slf4j-api:${slf4j_version}")
+  implementation("org.slf4j:slf4j-simple:${slf4j_version}")
+
+  //config
+  implementation("io.ktor:ktor-server-config-yaml:$ktorVersion")
+
+  //test
+  testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
+  testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
+
+
+  ksp(project(":processor"))
+  kspTest(project(":processor"))
+}
+
+tasks.withType(KotlinCompile).configureEach {
+  if (it.name.contains("ksp")) {
+//    inputs.property("kotlinSources", sourceSets.main.kotlin.srcDirs)
+    outputs.upToDateWhen { false }
+  }
+}

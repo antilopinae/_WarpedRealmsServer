@@ -1,0 +1,53 @@
+//val ktorVersion: String by project
+//val kotlinxCoroutinesVersion: String by project
+//val kotlinVersion: String by project
+//val slf4j_version: String by project
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+eclipse.project.name = appName + '-core'
+
+dependencies {
+  implementation(project(":adapters"))
+  implementation(project(":adapters:grpc"))
+
+  implementation project(":processor")
+  implementation project(":core")
+
+//  ksp project(":processor")
+//  kspTest(project(':processor'))
+
+  api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
+  api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+  api "com.badlogicgames.gdx:gdx:$gdxVersion"
+  api "io.github.libktx:ktx-actors:$ktxVersion"
+  api "io.github.libktx:ktx-app:$ktxVersion"
+  api "io.github.libktx:ktx-assets:$ktxVersion"
+  api "io.github.libktx:ktx-box2d:$ktxVersion"
+  api "io.github.libktx:ktx-graphics:$ktxVersion"
+  api "io.github.libktx:ktx-math:$ktxVersion"
+  api "io.github.libktx:ktx-collections:$ktxVersion"
+  api "io.github.libktx:ktx-scene2d:$ktxVersion"
+  api "io.github.libktx:ktx-log:$ktxVersion"
+  api "io.github.libktx:ktx-tiled:$ktxVersion"
+  api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+  api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutinesVersion"
+
+
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${kotlinxCoroutinesVersion}")
+
+  //core
+  implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
+  implementation("io.ktor:ktor-server-netty-jvm:$ktorVersion")
+
+  //logger dependency
+  implementation("org.slf4j:slf4j-api:${slf4j_version}")
+  implementation("org.slf4j:slf4j-simple:${slf4j_version}")
+
+  //config
+  implementation("io.ktor:ktor-server-config-yaml:$ktorVersion")
+
+  //test
+  testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
+  testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
+}
+

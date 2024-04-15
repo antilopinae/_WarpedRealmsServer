@@ -1,0 +1,4 @@
+package entity
+
+object Users {
+}
