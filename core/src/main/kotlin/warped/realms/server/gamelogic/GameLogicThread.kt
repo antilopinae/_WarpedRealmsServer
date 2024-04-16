@@ -51,7 +51,6 @@ class GameLogicThread(
                     framesSkipped++
                 }
             } finally {
-
             }
         }
     }
@@ -74,9 +73,7 @@ class GameLogicThread(
     private fun update(delta: Float){
         game_package = serverGamePackageController.Update()
         serverGameLogic.entityMapperController.SetPackage(game_package)
-
         serverGameLogic.Update(delta)
-
         game_package = serverGameLogic.entityMapperController.GetPackage()
         serverGamePackageController.SendGamePackage(game_package)
     }

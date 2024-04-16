@@ -26,9 +26,11 @@ class ServerGamePackageController(
         updateRequests()
         val requests = mapRequests(requests)
         val entities = requests.map { (indObserver, request) ->
-            Entity(indObserver) to entityDaoMapper.MapEntity(request)
+            Entity(indObserver) to entityDaoMapper.MapEntity(request, indObserver)
         }
         // also need to save it
+        //
+        //
         return gamePackageMapper.MapGamePackage(entities)
     }
     fun SendGamePackage(gamePackage: GamePackage){

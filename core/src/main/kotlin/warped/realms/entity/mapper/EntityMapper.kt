@@ -1,7 +1,6 @@
 package warped.realms.entity.mapper
 
-import dao.EntityDao
-import entity.mapper.EntityDismapper
+import warped.realms.entity.EntityDismapper
 import warped.realms.component.MoveComponent
 import warped.realms.component.PhysicComponent
 import warped.realms.component.TransformComponent

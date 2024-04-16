@@ -19,11 +19,7 @@ class ServerGameLogic
     val systems by lazy {
         Systems(factories)
     }
-
     val entityMapperController = EntityMapperController(systems)
-
-//    private val titledMap by lazy { TmxMapLoader().load("map/map_1.tmx") }
-
     fun Start(){
         Logger.debug { "Game screen shown" }
     }

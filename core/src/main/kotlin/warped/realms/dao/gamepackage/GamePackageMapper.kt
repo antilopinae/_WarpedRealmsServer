@@ -6,10 +6,10 @@ import dao.GamePackage
 
 class GamePackageMapper {
     fun MapGamePackage(entities: List<Pair<Entity, EntityDao>>): GamePackage {
-        TODO()
+        return GamePackage().also { it.entities.addAll(entities.map { (entity, entityDao) -> entityDao }) }
     }
     fun UnmapGamePackage(gamePackage: GamePackage): List<Pair<Entity, EntityDao>>{
-        TODO()
+        return gamePackage.entities.map { entity -> (Entity(entity.id) to entity) }
     }
     fun ResolveGamePackage(main_package: GamePackage, local_package: GamePackage){
         TODO()
