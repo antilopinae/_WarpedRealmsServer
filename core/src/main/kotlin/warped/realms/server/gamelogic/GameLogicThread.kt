@@ -1,10 +1,10 @@
-package server
+package warped.realms.server.gamelogic
 
 import adapters.grpc.dao.RequestMessage
 import adapters.grpc.dao.ResponseMessage
 import adapters.grpc.server.dao.Observer
 import dao.GamePackage
-import server_logic.server.ServerGameLogic
+import warped.realms.server.mapper.ServerGamePackageController
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.locks.ReentrantLock
 
@@ -58,11 +58,11 @@ class GameLogicThread(
     override fun start() {
         super.start()
         serverGameLogic.Start()
-        while (true){
-            GameLoop()
-        }
+        GameLoop()
     }
     override fun interrupt() {
+        if(lockGameLogic.isLocked)
+            lockGameLogic.unlock()
         super.interrupt()
     }
     override fun clone(): GameLogicThread {

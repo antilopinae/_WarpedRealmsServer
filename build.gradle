@@ -20,8 +20,6 @@ plugins {
   id("com.google.protobuf") version "0.9.4"
 }
 
-apply plugin: 'io.ktor.plugin'
-
 allprojects {
   apply plugin: 'eclipse'
   apply plugin: 'idea'

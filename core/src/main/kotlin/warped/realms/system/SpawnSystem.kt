@@ -12,7 +12,6 @@ import ktx.tiled.y
 import warped.realms.component.*
 import warped.realms.entity.Entity
 import System
-import com.badlogic.gdx.assets.loaders.TextureLoader
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.scenes.scene2d.ui.Image
@@ -20,10 +19,9 @@ import com.badlogic.gdx.utils.Scaling
 import generated.systems.Factories
 import generated.systems.Systems
 import generated.systems.injectSys
-import ktx.assets.toInternalFile
 import ktx.box2d.BodyDefinition
 import ktx.box2d.body
-import server_logic.server.ServerGameLogic.Companion.UNIT_SCALE
+import warped.realms.server.gamelogic.ServerGameLogic.Companion.UNIT_SCALE
 import warped.realms.entity.GameEntity
 import warped.realms.entity.mapper.EntityMapper
 import warped.realms.event.*

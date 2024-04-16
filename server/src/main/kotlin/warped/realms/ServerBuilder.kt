@@ -1,7 +1,5 @@
 package warped.realms
 
-import GRpcBuilder
-import KtorBuilder
 import ServerConnector
 import ServerGameLogicBuilder
 import adapters.grpc.dao.RequestMessage
@@ -18,17 +16,10 @@ class ServerBuilder {
         queue_response.add(ConcurrentLinkedQueue())
         queue_request.add(ConcurrentLinkedQueue())
 
-        val grpc = Thread{
+        val server = Thread{
             val serverConnector = ServerConnector(queue_response, queue_request)
-//            val grpc_builder = GRpcBuilder(serverConnector)
         }
-        grpc.start()
-
-        val ktor = Thread{
-            val ktor_builder = KtorBuilder()
-            ktor_builder.start()
-        }
-        ktor.start()
+        server.start()
 
         val game_logic = Thread{
             val game_logic_builder = ServerGameLogicBuilder(queue_response, queue_request)

@@ -1,12 +1,12 @@
-package server
+package warped.realms.server.mapper
 
 import adapters.grpc.dao.RequestMessage
 import adapters.grpc.dao.ResponseMessage
 import adapters.grpc.server.dao.Observer
 import dao.Entity
-import dao.EntityDaoMapper
+import warped.realms.dao.entitydao.EntityDaoMapper
 import dao.GamePackage
-import dao.GamePackageMapper
+import warped.realms.dao.gamepackage.GamePackageMapper
 import java.util.concurrent.ConcurrentLinkedQueue
 
 class ServerGamePackageController(

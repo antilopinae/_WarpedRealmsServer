@@ -1,4 +1,4 @@
-package server_logic.server
+package warped.realms.server.gamelogic
 
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import dao.mapper.EntityMapperController

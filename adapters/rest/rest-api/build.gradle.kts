@@ -15,8 +15,8 @@ dependencies {
 //    implementation("io.jsonwebtoken:jjwt-impl:jwtVersion")
 //    implementation("io.jsonwebtoken:jjwt-jackson:jwtVersion")
 
-    //websocket
-    implementation("io.ktor:ktor-server-websockets-jvm:$ktorVersion")
+//    //websocket
+//    implementation("io.ktor:ktor-server-websockets-jvm:$ktorVersion")
 }
 
 tasks.test {

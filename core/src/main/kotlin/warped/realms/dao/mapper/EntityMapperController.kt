@@ -1,11 +1,9 @@
 package dao.mapper
 
 import dao.GamePackage
-import dao.GamePackageDismapper
-import entity.mapper.EntityDismapper
+import warped.realms.dao.gamepackage.GamePackageDismapper
 import generated.systems.Systems
 import generated.systems.injectSys
-import server_logic.server.ServerGameLogic
 import warped.realms.system.update.mapper.ServerDismapperSystem
 import warped.realms.system.update.mapper.ServerMapperSystem
 

@@ -1,4 +1,4 @@
-package adapters.grpc
+package grpc
 
 import adapters.grpc.dao.RequestMessage
 import adapters.grpc.dao.ResponseMessage

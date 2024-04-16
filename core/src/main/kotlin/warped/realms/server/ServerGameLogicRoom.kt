@@ -3,7 +3,8 @@ package server_logic.server
 import adapters.grpc.dao.RequestMessage
 import adapters.grpc.dao.ResponseMessage
 import adapters.grpc.server.dao.Observer
-import server.GameLogicThread
+import warped.realms.server.gamelogic.GameLogicThread
+import warped.realms.server.gamelogic.ServerGameLogic
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.locks.ReentrantLock
 
@@ -31,7 +32,7 @@ class ServerGameLogicRoom(
         }
         //clean all
     }
-    private fun createPhysicRoom(): GameLogicThread{
+    private fun createPhysicRoom(): GameLogicThread {
         val gameLogic = GameLogicThread(serverGameLogic, lockGameLogic, queue_response, queue_request)
         threadsGameLogic.add(gameLogic)
         return gameLogic

@@ -11,6 +11,7 @@ import warped.realms.screen.ServerScreen
 
 /** Launches the desktop (LWJGL3) application. */
 fun main() {
+    //start ktor and grpc
     val server = ServerBuilder().build()
 
     //start window mode

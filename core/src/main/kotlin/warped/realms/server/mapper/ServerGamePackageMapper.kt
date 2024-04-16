@@ -1,10 +1,10 @@
-package server
+package warped.realms.server.mapper
 
 import adapters.grpc.dao.RequestMessage
 import adapters.grpc.dao.ResponseMessage
-import com.grpc.HelloRequest
-import com.grpc.HelloResponse
 import dao.*
+import warped.realms.dao.entitydao.EntityDaoMapper
+import warped.realms.dao.gamepackage.GamePackageMapper
 
 class ServerGamePackageMapper {
     private val gamePackageMapper = GamePackageMapper()
