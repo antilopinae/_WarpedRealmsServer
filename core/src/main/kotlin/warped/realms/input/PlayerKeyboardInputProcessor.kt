@@ -24,7 +24,7 @@ class PlayerKeyboardInputProcessor(
         moveCmps.add(moveComponent)
     }
     init {
-        Gdx.input.inputProcessor = this
+//        Gdx.input.inputProcessor = this
     }
     fun Dispose() {
 

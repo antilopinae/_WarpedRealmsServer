@@ -7,5 +7,4 @@ import ktx.app.KtxScreen
 abstract class AScreen(
     val game: WarpedRealms,
     val systems: Systems
-): KtxScreen {
-}
+): KtxScreen

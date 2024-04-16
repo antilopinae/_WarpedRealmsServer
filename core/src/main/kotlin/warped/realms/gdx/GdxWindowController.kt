@@ -10,7 +10,7 @@ class GdxWindowController {
     private val lock: ReentrantLock = ReentrantLock()
 
     init {
-3
+
     }
 
     companion object{

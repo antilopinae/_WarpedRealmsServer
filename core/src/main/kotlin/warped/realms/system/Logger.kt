@@ -7,9 +7,11 @@ object Logger {
 }
 
 fun Logger.debug(p: () -> String) {
-    Logger.logger.debug(p)
+    println(p.invoke())
+//    Logger.logger.debug(p)
 }
 
 fun Logger.error(p: () -> String) {
-    Logger.logger.error(p)
+    println(p.invoke())
+//    Logger.logger.error(p)
 }

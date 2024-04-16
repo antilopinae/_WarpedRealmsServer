@@ -10,15 +10,17 @@ import adapters.grpc.server.dao.Observer
 import java.util.concurrent.ConcurrentLinkedQueue
 
 class ServerBuilder {
-
     fun build(){
         System.setProperty("io.ktor.development", "true")
         val queue_response: ConcurrentLinkedQueue<ConcurrentLinkedQueue<Pair<Observer, ResponseMessage>>> = ConcurrentLinkedQueue()
         val queue_request: ConcurrentLinkedQueue<ConcurrentLinkedQueue<Pair<Observer, RequestMessage>>> = ConcurrentLinkedQueue()
 
+        queue_response.add(ConcurrentLinkedQueue())
+        queue_request.add(ConcurrentLinkedQueue())
+
         val grpc = Thread{
             val serverConnector = ServerConnector(queue_response, queue_request)
-            val grpc_builder = GRpcBuilder(serverConnector)
+//            val grpc_builder = GRpcBuilder(serverConnector)
         }
         grpc.start()
 
