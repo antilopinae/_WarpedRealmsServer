@@ -20,7 +20,7 @@ fun main() {
       return
     Lwjgl3Application(WarpedRealms(), Lwjgl3ApplicationConfiguration().apply {
         setTitle("WarpedRealms:LootLabyrinth")
-        setWindowedMode(1920, 1080)
+        setWindowedMode(600, 400)
         //setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode())
         //setResizable(false)
         useVsync(false)

@@ -2,6 +2,7 @@ import com.badlogic.gdx.Application
 import com.badlogic.gdx.Gdx
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
+import warped.realms.resources.ResourceController
 import warped.realms.screen.CRAssetManager
 import warped.realms.screen.KeeperGame
 import warped.realms.screen.ScreenEnum
@@ -13,8 +14,11 @@ class WarpedRealms : KtxGame<KtxScreen>() {
     val keeperGame = KeeperGame.apply { this.game = this@WarpedRealms }
     override fun create() {
         Gdx.app.logLevel = Application.LOG_DEBUG
+        val a = ResourceController.getInstance().GetAtlas()
+
         ScreenManager.getInstance().init(this)
         ScreenManager.getInstance().show(ScreenEnum.SERVER_SCREEN)
+
 //        ScreenManager.getInstance().hide(ScreenEnum.SERVER_SCREEN)
 //        ScreenManager.getInstance().show(ScreenEnum.GAME)
     }

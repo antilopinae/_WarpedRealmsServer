@@ -31,6 +31,6 @@ class EntityMapper(
     fun DismapEntity(entity: EntityDao) {
         moveMapper.DismapMoveComponent(entity)
         transMapper.DismapTransformComponent(entity)
-        physMapper.DismapPhysicComponent(entity)
+//        physMapper.DismapPhysicComponent(entity)
     }
 }

@@ -24,7 +24,7 @@ class ResourceController {
         }
     }
     private fun downloadResourses(){
-        textureAtlas
+        println(textureAtlas.toString())
     }
     companion object{
         private val instance: AtomicBoolean = AtomicBoolean(false)

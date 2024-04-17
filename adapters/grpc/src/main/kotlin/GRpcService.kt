@@ -10,7 +10,7 @@ class GRpcService(
 ): StreamObserver<HelloRequest> {
     override fun onNext(p0: HelloRequest) {
         // receiving the data from client
-        println("${p0!!}")
+//        println("${p0!!}")
         connector.getMessage(responseObserver, unmapRequest(p0))
     }
     override fun onCompleted() {

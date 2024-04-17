@@ -12,4 +12,10 @@ class GamePackageDismapper {
     fun MapGamePackage(entities: List<EntityDao>): GamePackage {
         return GamePackage().also { it.entities.addAll(entities) }
     }
+    fun MapGamePackage(gamePackage: GamePackage, entities: List<EntityDao>): GamePackage {
+        return gamePackage.also {
+            it.entities.clear()
+            it.entities.addAll(entities)
+        }
+    }
 }

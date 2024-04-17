@@ -57,6 +57,8 @@ class GameLogicThread(
     override fun start() {
         super.start()
         serverGameLogic.Start()
+        if(!lockGameLogic.isLocked)
+            lockGameLogic.lock()
         GameLoop()
     }
     override fun interrupt() {
@@ -69,12 +71,12 @@ class GameLogicThread(
         //something else
         return this
     }
-    lateinit var game_package: GamePackage
+    var game_package = GamePackage()
     private fun update(delta: Float){
-        game_package = serverGamePackageController.Update()
+        serverGamePackageController.Update(game_package)
         serverGameLogic.entityMapperController.SetPackage(game_package)
         serverGameLogic.Update(delta)
-        game_package = serverGameLogic.entityMapperController.GetPackage()
+        game_package.apply{ serverGameLogic.entityMapperController.GetPackage(this) }
         serverGamePackageController.SendGamePackage(game_package)
     }
     companion object{

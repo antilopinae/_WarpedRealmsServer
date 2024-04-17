@@ -20,7 +20,8 @@ class ServerMapperSystem(
     fun GetEntitiesDao() = entitiesDao
     fun Update(deltaTime: Float) {
         entityMappers.forEach { it.Update() }
-        entitiesDao.addAll( entityMappers.map { it.MapEntity() })
+        entitiesDao.clear()
+        entitiesDao.addAll( entityMappers.map { it.MapEntity().also { it.id = 0 } })
     }
     fun PutComponent(cmp: EntityMapper) {
         entityMappers.add(cmp)

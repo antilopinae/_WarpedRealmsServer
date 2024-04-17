@@ -1,5 +1,6 @@
 package dao.mapper
 
+import dao.EntityDao
 import dao.GamePackage
 import warped.realms.dao.gamepackage.GamePackageDismapper
 import generated.systems.Systems
@@ -24,8 +25,14 @@ class EntityMapperController(
         val gamePackage = gamePackageDismapper.MapGamePackage(entitiesDao)
         return gamePackage
     }
+    fun GetPackage(gamePackage: GamePackage) {
+        val entitiesDao = serverMapperSystem.GetEntitiesDao()
+        gamePackage.apply { gamePackageDismapper.MapGamePackage(this, entitiesDao) }
+    }
+    lateinit var entities: List<EntityDao>
     fun SetPackage(gamePackage: GamePackage){
-        val entities = gamePackageDismapper.DismapGamePackage(gamePackage)
+//        entities = gamePackageDismapper.DismapGamePackage(gamePackage)
+        entities = gamePackage.entities
         serverDismapperSystem.DismapEntities(entities)
     }
     private fun resolvePackages(main_package: GamePackage, local_package: GamePackage){

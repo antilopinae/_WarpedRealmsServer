@@ -19,7 +19,7 @@ class ServerDismapperSystem(
     val factories: Factories
 ) {
     private val entityMappers = mutableListOf<EntityMapper>()
-    private var entitiesDao: List<EntityDao> = listOf()
+    private val entitiesDao: MutableList<EntityDao> = mutableListOf()
 
     val spawnEntityEvent: EntitySpawnEvent by lazy {
         EntitySpawnEvent(entityType.PLAYER, injectSys<SpawnSystem>(systems))
@@ -31,7 +31,10 @@ class ServerDismapperSystem(
         entityMappers.add(cmp)
     }
     fun DismapEntities(entities: List<EntityDao>){
-        this.entitiesDao = entities
+        this.entitiesDao.clear()
+        if(entities.isNotEmpty()) {
+            entitiesDao.add(entities.last())
+        }
     }
     fun Update(delta: Float) {
         for(i in 0..entitiesDao.size-1){
@@ -39,7 +42,7 @@ class ServerDismapperSystem(
                 entityMappers[i].DismapEntity(entitiesDao[i])
             }
             else{
-                if(!spawnEntityEvent.lock.isLocked){
+                if(!spawnEntityEvent.lock.isLocked && i<3){
                     spawnEntityEvent.lock.lock()
                     spawnEntityEvent.onTick()
                     if(!spawnEntityEvent.lock.isLocked){

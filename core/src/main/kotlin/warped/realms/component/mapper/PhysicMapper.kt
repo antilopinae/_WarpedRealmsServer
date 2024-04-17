@@ -23,6 +23,7 @@ class PhysicMapper (
     }
     fun MapPhysicComponent(entity: EntityDao){
         entity.apply {
+            this.positions = mutableListOf<PlayerPosition>().also { it.clear() }
             this.positions.add(PlayerPosition("You", mapperCmp.location.x, mapperCmp.location.y))
         }
     }

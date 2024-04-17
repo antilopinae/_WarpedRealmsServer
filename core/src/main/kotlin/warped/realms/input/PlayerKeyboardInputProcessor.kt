@@ -56,12 +56,12 @@ class PlayerKeyboardInputProcessor(
         return false
     }
     private fun updatePlayerMovement() {
-        moveCmps.forEach {
-            it.apply {
-                cos = playerCos
-                sin = playerSin
-            }
-        }
+//        moveCmps.forEach {
+//            it.apply {
+//                cos = playerCos
+//                sin = playerSin
+//            }
+//        }
     }
     private fun Int.isMovementKey(): Boolean {
         return this == UP || this == DOWN || this == RIGHT || this == LEFT

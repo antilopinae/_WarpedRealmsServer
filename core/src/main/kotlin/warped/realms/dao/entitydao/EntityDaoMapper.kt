@@ -6,12 +6,20 @@ import adapters.grpc.dao.ResponseMessage
 import dao.EntityDao
 
 class EntityDaoMapper {
+
+    val byteArray0 = arrayOf((0).toByte()).toByteArray()
+    val byteArray1 = arrayOf((1).toByte()).toByteArray()
+    val byteArray2 = arrayOf((2).toByte()).toByteArray()
+
+    fun ByteArray.toFloat(): Float = if (this.contentEquals(byteArray0)) -1f else if(this.contentEquals(byteArray1)) 0f else 1f
+
+
     fun MapEntity(request: RequestMessage, indPlayer: Int): EntityDao {
-        val input_x = request.input_x.toString().toFloat()-1f
-        val input_y = request.input_y.toString().toFloat()-1f
-        val input_z = request.input_z.toString().toFloat()
-        val mouse_x = request.mouse_x.toString().toFloat()
-        val mouse_y = request.mouse_y.toString().toFloat()
+        val input_x = request.input_x.toFloat()
+        val input_y = request.input_y.toFloat()
+        val input_z = request.input_z.toFloat()
+        val mouse_x = request.mouse_x.toFloat()
+        val mouse_y = request.mouse_y.toFloat()
         return EntityDao().also {
             it.id = indPlayer
             it.input_x = input_x

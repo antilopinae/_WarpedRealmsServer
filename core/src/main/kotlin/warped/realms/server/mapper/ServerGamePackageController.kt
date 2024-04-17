@@ -33,23 +33,37 @@ class ServerGamePackageController(
         //
         return gamePackageMapper.MapGamePackage(entities)
     }
+    fun Update(gamePackage: GamePackage){
+        sortRequests()
+        updateRequests()
+        val _requests = mapRequests(requests)
+        val entities = _requests.map { (indObserver, request) ->
+            Entity(indObserver) to entityDaoMapper.MapEntity(request, indObserver)
+        }
+        // also need to save it
+        //
+        //
+        gamePackageMapper.MapGamePackage(gamePackage, entities)
+    }
     fun SendGamePackage(gamePackage: GamePackage){
         val response = gamePackageMapper.UnmapGamePackage(gamePackage)
-        responses.clear()
+//        responses.clear()
         responses.addAll(
             response.map{(entity, entityDao) ->
                 observers[entity.index] to entityDaoMapper.UnmapEntity(entityDao)
             }
         )
-        queue_response.addAll(responses)
+        if(responses.isNotEmpty()) queue_response.add(responses.last())
     }
     private fun sortRequests(){
         requests.clear()
     }
     private fun updateRequests(){
-        while(queue_request.isNotEmpty()){
+//        while(queue_request.isNotEmpty()){
+        if(queue_request.isNotEmpty())
             requests.add(queue_request.poll())
-        }
+//        }
+        queue_request.clear()
     }
     private fun mapRequests(requests: List<Pair<Observer, RequestMessage>>): List<Pair<Int, RequestMessage>>{
         return requests.map { (observer,  request) ->

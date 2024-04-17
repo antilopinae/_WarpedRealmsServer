@@ -21,9 +21,14 @@ class GRpcConnector(
         sendResponses()
     }
     fun sendResponses(){
-        while(queue_response.isNotEmpty()){
+//        while(queue_response.isNotEmpty()){
+//            val (observer, response) = queue_response.poll()
+//            observer.observer.onNext(mapResponse(response))
+//        }
+        if(queue_response.isNotEmpty()){
             val (observer, response) = queue_response.poll()
             observer.observer.onNext(mapResponse(response))
+            queue_response.clear()
         }
     }
     fun removeObserver(observer: StreamObserver<HelloResponse>){
@@ -39,8 +44,7 @@ class GRpcConnector(
         val hello_response = HelloResponse.newBuilder()
             .setToken(response.token)
             .also {
-                for(i in 0..<response.positions.size){
-                    println(response.positions.toList()[i].second.position_x)
+                for(i in 0..0){
                     it.addPositions(
                         PlayerPosition.newBuilder()
                             .setPlayer("You${i}")
