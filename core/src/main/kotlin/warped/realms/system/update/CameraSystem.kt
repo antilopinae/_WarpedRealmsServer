@@ -19,7 +19,7 @@ class CameraSystem(
     val systems: Systems,
     val factories: Factories
 ) : IHandleEvent {
-    private val camera: Camera by lazy { RenderSystem.stage.camera }
+//    private val camera: Camera by lazy { RenderSystem.stage.camera }
     private val imageCmps: MutableList<ImageComponent> = mutableListOf()
 
     private var maxW = 0f
@@ -32,17 +32,17 @@ class CameraSystem(
 //        val x = this.javaClass.getAnnotation(Update::class.java)?.priority
 //        println("[UPDATE] ${this::class.simpleName} $x")
 
-        val viewW = camera.viewportWidth * 0.5f
-        val viewH = camera.viewportHeight * 0.5f
-        if (imageCmps.isNotEmpty()) {
-            with(imageCmps.last()) {
-                camera.position.set(
-                    (image.x + image.width * 0.5f).coerceIn(viewW, maxW - viewW),
-                    (image.y + image.height * 0.5f).coerceIn(viewH, maxH - viewH),
-                    camera.position.z
-                )
-            }
-        }
+//        val viewW = camera.viewportWidth * 0.5f
+//        val viewH = camera.viewportHeight * 0.5f
+//        if (imageCmps.isNotEmpty()) {
+//            with(imageCmps.last()) {
+//                camera.position.set(
+//                    (image.x + image.width * 0.5f).coerceIn(viewW, maxW - viewW),
+//                    (image.y + image.height * 0.5f).coerceIn(viewH, maxH - viewH),
+//                    camera.position.z
+//                )
+//            }
+//        }
     }
     fun deleteComponent(component: ImageComponent) {
         imageCmps.remove(component)

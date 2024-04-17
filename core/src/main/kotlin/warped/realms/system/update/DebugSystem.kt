@@ -16,12 +16,12 @@ class DebugSystem(
     val factories: Factories
 ) {
     private val phWorld: World = PhysicSystem.phWorld
-    private val stage: Stage by lazy{ RenderSystem.stage }
+//    private val stage: Stage by lazy{ RenderSystem.stage }
 
     private val physicRenderer: Box2DDebugRenderer by lazy { Box2DDebugRenderer() }
 
     fun Update(deltaTime: Float) {
-        physicRenderer.render(phWorld, stage.camera.combined)
+//        physicRenderer.render(phWorld, stage.camera.combined)
     }
 
     fun Dispose() {

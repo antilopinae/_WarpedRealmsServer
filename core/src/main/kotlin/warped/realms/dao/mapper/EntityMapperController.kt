@@ -20,8 +20,8 @@ class EntityMapperController(
         injectSys<ServerMapperSystem>(systems)
     }
     fun GetPackage(): GamePackage {
-        val entitiesDismapper = serverMapperSystem.entitiesDismapper
-        val gamePackage = gamePackageDismapper.MapGamePackage(entitiesDismapper)
+        val entitiesDao = serverMapperSystem.GetEntitiesDao()
+        val gamePackage = gamePackageDismapper.MapGamePackage(entitiesDao)
         return gamePackage
     }
     fun SetPackage(gamePackage: GamePackage){

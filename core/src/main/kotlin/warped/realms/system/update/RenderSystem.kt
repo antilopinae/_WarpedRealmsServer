@@ -40,44 +40,44 @@ class RenderSystem(
 
     private val bgdLayers = mutableListOf<TiledMapTileLayer>()
     private val fgdLayers = mutableListOf<TiledMapTileLayer>()
-    private val mapRenderer by lazy { OrthogonalTiledMapRenderer(null, UNIT_SCALE, stage.batch)}
-    private val orthoCam by lazy { stage.camera as OrthographicCamera}
+//    private val mapRenderer by lazy { OrthogonalTiledMapRenderer(null, UNIT_SCALE, stage.batch)}
+//    private val orthoCam by lazy { stage.camera as OrthographicCamera}
 
     fun Update(deltaTime: Float) {
 //      println("TIME: ${1 / deltaTime}")
-        with(stage) {
-            viewport.apply()
-            AnimatedTiledMapTile.updateAnimationBaseTime()
-            mapRenderer.setView(orthoCam)
-            //mapRenderer.render()
-            renderTileLayer(bgdLayers)
-            act(deltaTime)
-            draw()
-            renderTileLayer(fgdLayers)
-        }
+//        with(stage) {
+//            viewport.apply()
+//            AnimatedTiledMapTile.updateAnimationBaseTime()
+//            mapRenderer.setView(orthoCam)
+//            //mapRenderer.render()
+//            renderTileLayer(bgdLayers)
+//            act(deltaTime)
+//            draw()
+//            renderTileLayer(fgdLayers)
+//        }
     }
 
     fun PutComponent(component: ImageComponent) {
-        stage.addActor(
-            component.image
-        )
+//        stage.addActor(
+//            component.image
+//        )
         images.add(component)
         images = images.sorted().toMutableList()
         images.forEach { it.image.toFront() }
         println("[DEBUG] Put component ${component::class.simpleName} in ${this::class.simpleName}")
     }
     fun DeleteComponent(component: ImageComponent) {
-        stage.root.removeActor(component.image)
+//        stage.root.removeActor(component.image)
         println("[DEBUG] Delete component ${component::class.simpleName} in ${this::class.simpleName}")
     }
     fun Dispose() {
         println("[DISPOSE] ${this::class.simpleName}")
         textureAtlas.disposeSafely()
-        stage.disposeSafely()
-        mapRenderer.disposeSafely()
+//        stage.disposeSafely()
+//        mapRenderer.disposeSafely()
     }
     fun resize(width: Int, height: Int){
-        stage.viewport.update(width,height, true)
+//        stage.viewport.update(width,height, true)
     }
     override fun handle(event: Event): Boolean {
         when(event){
@@ -105,15 +105,15 @@ class RenderSystem(
     }
     fun Stage.renderTileLayer(list: MutableList<TiledMapTileLayer>){
         if(list.isNotEmpty()){
-            stage.batch.use(orthoCam.combined){
-                list.forEach {
-                    mapRenderer.renderTileLayer(it)
-                }
-            }
+//            stage.batch.use(orthoCam.combined){
+//                list.forEach {
+//                    mapRenderer.renderTileLayer(it)
+//                }
+//            }
         }
     }
     companion object{
-        val stage: Stage by lazy { Stage(ExtendViewport(16f, 9f, 1920f, 1080f)) }
+//        val stage: Stage by lazy { Stage(ExtendViewport(16f, 9f, 1920f, 1080f)) }
         val textureAtlas: TextureAtlas by lazy { ResourceController.getInstance().GetAtlas() }
     }
 }

@@ -1,15 +1,15 @@
 package warped.realms.dao.gamepackage
 
+import dao.Entity
+import dao.EntityDao
 import dao.GamePackage
-import warped.realms.entity.EntityDismapper
-import warped.realms.entity.mapper.EntityDismapperMapper
+import warped.realms.dao.entitydao.EntityDaoMapper
 
 class GamePackageDismapper {
-    val entityDismapperMapper = EntityDismapperMapper()
-    fun DismapGamePackage(gamePackage: GamePackage): List<EntityDismapper>{
-        TODO()
+    fun DismapGamePackage(gamePackage: GamePackage): List<EntityDao>{
+        return gamePackage.entities
     }
-    fun MapGamePackage(entities: List<EntityDismapper>): GamePackage {
-        TODO()
+    fun MapGamePackage(entities: List<EntityDao>): GamePackage {
+        return GamePackage().also { it.entities.addAll(entities) }
     }
 }

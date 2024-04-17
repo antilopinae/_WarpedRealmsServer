@@ -2,7 +2,7 @@ package warped.realms.system.update.mapper
 
 import Update
 import System
-import warped.realms.entity.EntityDismapper
+import dao.EntityDao
 import generated.systems.Factories
 import generated.systems.Systems
 import warped.realms.entity.mapper.EntityMapper
@@ -14,13 +14,13 @@ class ServerMapperSystem(
     val systems: Systems,
     val factories: Factories
 ) {
-    val entitiesDismapper: MutableList<EntityDismapper> = mutableListOf()
+    private val entitiesDao: MutableList<EntityDao> = mutableListOf()
     private val entityMappers = mutableListOf<EntityMapper>()
 
+    fun GetEntitiesDao() = entitiesDao
     fun Update(deltaTime: Float) {
-        //uncommit
-//        entityMappers.forEach { it.Update() }
-//        entitiesDismapper.addAll( entityMappers.map { it.MapEntity() })
+        entityMappers.forEach { it.Update() }
+        entitiesDao.addAll( entityMappers.map { it.MapEntity() })
     }
     fun PutComponent(cmp: EntityMapper) {
         entityMappers.add(cmp)

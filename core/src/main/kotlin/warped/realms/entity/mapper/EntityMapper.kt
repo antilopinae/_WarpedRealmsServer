@@ -1,6 +1,6 @@
 package warped.realms.entity.mapper
 
-import warped.realms.entity.EntityDismapper
+import dao.EntityDao
 import warped.realms.component.MoveComponent
 import warped.realms.component.PhysicComponent
 import warped.realms.component.TransformComponent
@@ -21,12 +21,16 @@ class EntityMapper(
         transMapper.Update()
         physMapper.Update()
     }
-
-    fun MapEntity(): EntityDismapper {
-        TODO()
+    fun MapEntity(): EntityDao {
+        val entity = EntityDao()
+        moveMapper.MapMoveComponent(entity)
+        transMapper.MapTransformComponent(entity)
+        physMapper.MapPhysicComponent(entity)
+        return entity
     }
-
-    fun DismapEntity(p: EntityDismapper) {
-        TODO()
+    fun DismapEntity(entity: EntityDao) {
+        moveMapper.DismapMoveComponent(entity)
+        transMapper.DismapTransformComponent(entity)
+        physMapper.DismapPhysicComponent(entity)
     }
 }

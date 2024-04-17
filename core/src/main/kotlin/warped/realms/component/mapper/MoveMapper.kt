@@ -1,5 +1,6 @@
 package warped.realms.component.mapper
 
+import dao.EntityDao
 import warped.realms.component.MoveComponent
 
 class MoveMapper(
@@ -10,29 +11,25 @@ class MoveMapper(
         trackerCmp.cos,
         trackerCmp.sin
     )
-
     fun Update() {
         mapperCmp.speed = trackerCmp.speed
         mapperCmp.cos = trackerCmp.cos
         mapperCmp.sin = trackerCmp.sin
     }
-
+    fun MapMoveComponent(entity: EntityDao){
+        entity.apply {
+            this.input_x = mapperCmp.cos
+            this.input_y = mapperCmp.sin
+        }
+    }
+    fun DismapMoveComponent(entity: EntityDao){
+        trackerCmp.apply {
+            this.speed = 3f
+            this.sin = entity.input_x
+            this.cos = entity.input_y
+        }
+    }
     companion object {
         const val SIZE_ARRAY = 3
-        fun MoveComponent.map(): ByteArray {
-            val p = ByteArray(3)
-            p[0] = this.speed.toInt().toByte()
-            p[1] = this.cos.toInt().toByte()
-            p[2] = this.sin.toInt().toByte()
-            return p
-        }
-
-        fun MoveComponent.dismap(p: ByteArray) {
-            this.apply {
-                this.speed = p[0].toFloat()
-                this.cos = p[1].toFloat()
-                this.sin = p[2].toFloat()
-            }
-        }
     }
 }

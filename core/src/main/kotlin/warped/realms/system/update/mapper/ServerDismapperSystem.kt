@@ -2,7 +2,7 @@ package warped.realms.system.update.mapper
 
 import Update
 import System
-import warped.realms.entity.EntityDismapper
+import dao.EntityDao
 import generated.systems.Factories
 import generated.systems.Systems
 import generated.systems.injectSys
@@ -19,7 +19,7 @@ class ServerDismapperSystem(
     val factories: Factories
 ) {
     private val entityMappers = mutableListOf<EntityMapper>()
-    private var entitiesDismapper: List<EntityDismapper> = listOf()
+    private var entitiesDao: List<EntityDao> = listOf()
 
     val spawnEntityEvent: EntitySpawnEvent by lazy {
         EntitySpawnEvent(entityType.PLAYER, injectSys<SpawnSystem>(systems))
@@ -30,26 +30,25 @@ class ServerDismapperSystem(
     fun PutComponent(cmp: EntityMapper) {
         entityMappers.add(cmp)
     }
-    fun DismapEntities(entities: List<EntityDismapper>){
-        this.entitiesDismapper = entities
+    fun DismapEntities(entities: List<EntityDao>){
+        this.entitiesDao = entities
     }
     fun Update(delta: Float) {
-        //uncommit
-//        for(i in 0..entitiesDismapper.size-1){
-//            if(entityMappers.size>i){
-//                entityMappers[i].DismapEntity(entitiesDismapper[i])
-//            }
-//            else{
-//                if(!spawnEntityEvent.lock.isLocked){
-//                    spawnEntityEvent.lock.lock()
-//                    spawnEntityEvent.onTick()
-//                    if(!spawnEntityEvent.lock.isLocked){
-//                        entityMappers[i].DismapEntity(entitiesDismapper[i])
-//                        println("spawn and dismap new entity")
-//                    }
-//                }
-//            }
-//        }
+        for(i in 0..entitiesDao.size-1){
+            if(entityMappers.size>i){
+                entityMappers[i].DismapEntity(entitiesDao[i])
+            }
+            else{
+                if(!spawnEntityEvent.lock.isLocked){
+                    spawnEntityEvent.lock.lock()
+                    spawnEntityEvent.onTick()
+                    if(!spawnEntityEvent.lock.isLocked){
+                        entityMappers[i].DismapEntity(entitiesDao[i])
+                        println("spawn and dismap new entity")
+                    }
+                }
+            }
+        }
     }
     fun Dispose() {
         entityMappers.clear()

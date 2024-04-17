@@ -10,7 +10,7 @@ class ServerGamePackageMapper {
     private val gamePackageMapper = GamePackageMapper()
     private val entityDaoMapper = EntityDaoMapper()
     fun MapGamePackage(requests: List<RequestMessage>): GamePackage {
-        return gamePackageMapper.MapGamePackage( requests.map { Entity(0) to  entityDaoMapper.MapEntity(it) } )
+        return gamePackageMapper.MapGamePackage( requests.map {request -> Entity(0) to  entityDaoMapper.MapEntity(request, 0) } )
     }
     fun UnmapGamePackage(gamePackage: GamePackage): List<ResponseMessage>{
         val entities = gamePackageMapper.UnmapGamePackage(gamePackage)

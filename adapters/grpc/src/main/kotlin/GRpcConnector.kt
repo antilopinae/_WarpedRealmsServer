@@ -40,6 +40,7 @@ class GRpcConnector(
             .setToken(response.token)
             .also {
                 for(i in 0..<response.positions.size){
+                    println(response.positions.toList()[i].second.position_x)
                     it.addPositions(
                         PlayerPosition.newBuilder()
                             .setPlayer("You${i}")

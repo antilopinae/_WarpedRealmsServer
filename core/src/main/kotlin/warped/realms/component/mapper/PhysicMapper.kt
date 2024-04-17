@@ -3,6 +3,8 @@ package warped.realms.component.mapper
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
+import dao.EntityDao
+import dao.PlayerPosition
 import ktx.box2d.body
 import ktx.box2d.box
 import ktx.math.vec2
@@ -19,11 +21,17 @@ class PhysicMapper (
     fun Update() {
         mapperCmp.location = vec2(trackerCmp.body!!.position.x, trackerCmp.body!!.position.y)
     }
-
+    fun MapPhysicComponent(entity: EntityDao){
+        entity.apply {
+            this.positions.add(PlayerPosition("You", mapperCmp.location.x, mapperCmp.location.y))
+        }
+    }
+    fun DismapPhysicComponent(entity: EntityDao){
+        trackerCmp.apply {
+           this.body!!.setTransform(entity.positions[0].pos_x.toFloat(), entity.positions[0].pos_y.toFloat(), this.body!!.angle)
+        }
+    }
     companion object {
         const val SIZE_ARRAY = 2
-       fun PhysicComponent.dismap() {
-//           this.body!!.setTransform(p.position_x.toFloat(), p.position_y.toFloat(), this.body!!.angle)
-       }
     }
 }

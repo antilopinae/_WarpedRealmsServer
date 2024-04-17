@@ -7,8 +7,8 @@ import dao.EntityDao
 
 class EntityDaoMapper {
     fun MapEntity(request: RequestMessage, indPlayer: Int): EntityDao {
-        val input_x = request.input_x.toString().toFloat()
-        val input_y = request.input_y.toString().toFloat()
+        val input_x = request.input_x.toString().toFloat()-1f
+        val input_y = request.input_y.toString().toFloat()-1f
         val input_z = request.input_z.toString().toFloat()
         val mouse_x = request.mouse_x.toString().toFloat()
         val mouse_y = request.mouse_y.toString().toFloat()

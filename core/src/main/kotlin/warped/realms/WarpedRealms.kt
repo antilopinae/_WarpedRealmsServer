@@ -14,9 +14,9 @@ class WarpedRealms : KtxGame<KtxScreen>() {
     override fun create() {
         Gdx.app.logLevel = Application.LOG_DEBUG
         ScreenManager.getInstance().init(this)
-//        ScreenManager.getInstance().show(ScreenEnum.SERVER_SCREEN)
+        ScreenManager.getInstance().show(ScreenEnum.SERVER_SCREEN)
 //        ScreenManager.getInstance().hide(ScreenEnum.SERVER_SCREEN)
-        ScreenManager.getInstance().show(ScreenEnum.GAME)
+//        ScreenManager.getInstance().show(ScreenEnum.GAME)
     }
     override fun dispose() {
         ScreenManager.getInstance().dispose()
