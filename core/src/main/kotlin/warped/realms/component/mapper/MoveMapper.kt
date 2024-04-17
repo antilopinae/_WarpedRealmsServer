@@ -24,7 +24,7 @@ class MoveMapper(
     }
     fun DismapMoveComponent(entity: EntityDao){
         trackerCmp.apply {
-            this.speed = 10f
+            this.speed = 2f
             this.sin = entity.input_x
             this.cos = entity.input_y
         }

@@ -37,8 +37,7 @@ class GameLogicThread(
                 try {
                     // send the thread to sleep for a short period
                     // very useful for battery saving
-
-                    Thread.sleep(sleepTime.toLong())
+                    Thread.sleep((sleepTime).toLong())
                 } catch (e: InterruptedException) {
                     println(e)
                 }
