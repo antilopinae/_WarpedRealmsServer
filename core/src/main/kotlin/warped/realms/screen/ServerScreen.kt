@@ -15,6 +15,7 @@ import generated.systems.Systems
 import ktx.actors.onClick
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
+import warped.realms.screen.KeeperGame.Companion.game
 import java.lang.Thread.sleep
 import kotlin.system.exitProcess
 
@@ -135,6 +136,10 @@ class ServerScreen: KtxScreen
             addActor(closeButton)
         }
         Gdx.input.inputProcessor = stage
+
+        Thread{
+            game.build()
+        }.start()
     }
     override fun render(delta: Float) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)

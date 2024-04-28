@@ -51,7 +51,7 @@ class SpawnSystem(
             posX,
             posY,
             size(AnimationModel.FANTAZY_WARRIOR),
-            8f,
+            3f,
             physicScaling = vec2(0.3f, 0.3f),
             physicOffset = vec2(0f, -10f * UNIT_SCALE)
         ).apply {
@@ -100,7 +100,6 @@ class SpawnSystem(
             }
             is EntitySpawnEvent -> {
                 spawnCfg(event.typeEntity, 1f, 1f)
-                event.lock.unlock()
                 println("Spawn entity")
             }
             is EntityDespawnEvent -> {

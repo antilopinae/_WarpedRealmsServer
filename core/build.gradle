@@ -63,6 +63,7 @@ dependencies {
 
   ksp(project(":processor"))
   kspTest(project(":processor"))
+
 }
 
 tasks.withType(KotlinCompile).configureEach {

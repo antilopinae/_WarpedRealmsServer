@@ -34,6 +34,10 @@ class EntityMapperController(
 //        entities = gamePackageDismapper.DismapGamePackage(gamePackage)
         entities = gamePackage.entities
         serverDismapperSystem.DismapEntities(entities)
+        if(entities.size>0)
+            println("[EntMapperController] dismapEntities input_x: ${entities[0].input_x}")
+        else
+            println("[EntMapperController] dismapEntities size 0")
     }
     private fun resolvePackages(main_package: GamePackage, local_package: GamePackage){
         // nothing to do

@@ -28,8 +28,8 @@ class GameLogicThread(
             beginTime = System.currentTimeMillis()
             framesSkipped = 0; // resetting the frames skipped
             //do some logic
-            this.update(FRAME_PERIOD)
-            timeDiff = (System.currentTimeMillis() - beginTime).toFloat()
+            this.update(FRAME_PERIOD/1000f)
+            timeDiff = (System.currentTimeMillis() - beginTime)*1f
             // calculate sleep time
             sleepTime = FRAME_PERIOD - timeDiff
             if (sleepTime > 0) {
@@ -37,19 +37,22 @@ class GameLogicThread(
                 try {
                     // send the thread to sleep for a short period
                     // very useful for battery saving
-                    Thread.sleep((sleepTime).toLong())
+                    Thread.sleep(sleepTime.toLong())
                 } catch (e: InterruptedException) {
-                    println(e)
+                    println(e.stackTraceToString())
                 }
             }
             try {
-                while (sleepTime < 0 && framesSkipped < MAX_FRAME_SKIPS && lockGameLogic.isLocked) {
-                    // we need to catch up
-                    this.update(FRAME_PERIOD)  // update without rendering
-                    sleepTime += FRAME_PERIOD // add frame period to check if in next frame
-                    framesSkipped++
-                }
-            } finally {
+//                while (sleepTime < 0 && framesSkipped < MAX_FRAME_SKIPS && lockGameLogic.isLocked) {
+//                    // we need to catch up
+//                    this.update(FRAME_PERIOD.toFloat())  // update without rendering
+//                    sleepTime += FRAME_PERIOD // add frame period to check if in next frame
+//                    framesSkipped++
+//                }
+            } catch(e: Exception){
+                println(e.stackTraceToString())
+            }
+            finally {
             }
         }
     }
@@ -75,12 +78,12 @@ class GameLogicThread(
         serverGamePackageController.Update(game_package)
         serverGameLogic.entityMapperController.SetPackage(game_package)
         serverGameLogic.Update(delta)
-        game_package.apply{ serverGameLogic.entityMapperController.GetPackage(this) }
+        serverGameLogic.entityMapperController.GetPackage(game_package)
         serverGamePackageController.SendGamePackage(game_package)
     }
     companion object{
-        const val MAX_FPS = 60
+        const val MAX_FPS = 60f
         const val MAX_FRAME_SKIPS = 4
-        const val FRAME_PERIOD = 1000/ MAX_FPS.toFloat()
+        const val FRAME_PERIOD = (1000f/ MAX_FPS).toFloat()
     }
 }

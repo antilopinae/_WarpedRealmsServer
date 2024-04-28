@@ -7,5 +7,5 @@ import java.util.concurrent.locks.ReentrantLock
 class EntitySpawnEvent(val typeEntity: entityType, vararg handlers: IHandleEvent): Event
 {
     override var handlers: Array<IHandleEvent> = arrayOf<IHandleEvent>(*handlers)
-    val lock = ReentrantLock()
+//    val lock = ReentrantLock()
 }

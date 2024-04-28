@@ -31,24 +31,32 @@ class ServerDismapperSystem(
         entityMappers.add(cmp)
     }
     fun DismapEntities(entities: List<EntityDao>){
-        this.entitiesDao.clear()
         if(entities.isNotEmpty()) {
-            entitiesDao.add(entities.last())
+            this.entitiesDao.clear()
+            entitiesDao.addAll(entities)
         }
+//        else{
+//            entitiesDao.add(EntityDao().apply {
+//                this.id = 0
+//                this.input_x = 0f
+//                this.input_y = 0f
+//                this.input_z = 0f
+//                this.mouse_x = 0f
+//                this.mouse_y = 0f
+//            })
+//        }
     }
     fun Update(delta: Float) {
         for(i in 0..entitiesDao.size-1){
             if(entityMappers.size>i){
                 entityMappers[i].DismapEntity(entitiesDao[i])
+                println("[DISMAPPER SYSTEM] Dismap entities input_x: ${entitiesDao[i].input_x}")
             }
             else{
-                if(!spawnEntityEvent.lock.isLocked && i<3){
-                    spawnEntityEvent.lock.lock()
+                if(i<1){
                     spawnEntityEvent.onTick()
-                    if(!spawnEntityEvent.lock.isLocked){
-                        entityMappers[i].DismapEntity(entitiesDao[i])
-                        println("spawn and dismap new entity")
-                    }
+                    entityMappers[i].DismapEntity(entitiesDao[i])
+                    println("spawn and dismap new entity")
                 }
             }
         }

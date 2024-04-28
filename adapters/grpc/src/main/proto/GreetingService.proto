@@ -7,12 +7,12 @@ enum Action{
 }
 
 message InputMap{
-  bytes input_x=1;
-  bytes input_y=2;
-  bytes input_z=3;
+  sint32 input_x=1;
+  sint32 input_y=2;
+  sint32 input_z=3;
 
-  bytes mouse_x=4;
-  bytes mouse_y=5;
+  sint32 mouse_x=4;
+  sint32 mouse_y=5;
 }
 
 message InputMessage{

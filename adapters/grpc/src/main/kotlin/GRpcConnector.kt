@@ -16,8 +16,10 @@ class GRpcConnector(
 
     fun getMessage(observer: StreamObserver<HelloResponse>, request: RequestMessage){
         queue_request.add(mapObserver(observer) to request)
+        println("[[GRPC Connector]] Get Message input_x: ${request.input_x}")
         //client sent some message lets add it to queue
         //some actions here
+//        println("${request.input_x} + ${request.input_y}")
         sendResponses()
     }
     fun sendResponses(){
@@ -26,9 +28,13 @@ class GRpcConnector(
 //            observer.observer.onNext(mapResponse(response))
 //        }
         if(queue_response.isNotEmpty()){
+            while(queue_response.size != 1)
+            {
+                queue_response.poll()
+            }
             val (observer, response) = queue_response.poll()
             observer.observer.onNext(mapResponse(response))
-            queue_response.clear()
+            println(response.positions.toList()[0].second.position_x)
         }
     }
     fun removeObserver(observer: StreamObserver<HelloResponse>){
@@ -44,7 +50,7 @@ class GRpcConnector(
         val hello_response = HelloResponse.newBuilder()
             .setToken(response.token)
             .also {
-                for(i in 0..0){
+                for(i in 0..response.positions.size-1){
                     it.addPositions(
                         PlayerPosition.newBuilder()
                             .setPlayer("You${i}")

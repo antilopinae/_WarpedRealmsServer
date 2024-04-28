@@ -1,3 +1,5 @@
+package warped.realms.server
+
 import adapters.grpc.dao.RequestMessage
 import adapters.grpc.dao.ResponseMessage
 import adapters.grpc.server.dao.Observer

@@ -9,9 +9,6 @@ class ResourceController {
     private val lock: ReentrantLock = ReentrantLock()
     private val textureAtlas: TextureAtlas by lazy{ TextureAtlas("graphics/gameObject.atlas".toInternalFile()) }
 
-    init {
-        downloadResourses()
-    }
     fun GetMap(){
 
     }
@@ -19,27 +16,28 @@ class ResourceController {
         lock.lock()
         try {
             return textureAtlas
-        } finally {
+        } catch( e: Exception){
+            println(e.stackTraceToString())
+            return textureAtlas
+        }
+        finally {
             lock.unlock()
         }
-    }
-    private fun downloadResourses(){
-        println(textureAtlas.toString())
     }
     companion object{
         private val instance: AtomicBoolean = AtomicBoolean(false)
         private lateinit var resourceController: ResourceController
         private val lock = ReentrantLock()
 
-        fun getInstance(): ResourceController{
+        fun getInstance(): ResourceController {
             lock.lock()
-            try{
-                if(!instance.get()){
+            try {
+                if (!instance.get()) {
                     instance.set(true)
                     resourceController = ResourceController()
                 }
                 return resourceController
-            } finally{
+            } finally {
                 lock.unlock()
             }
         }

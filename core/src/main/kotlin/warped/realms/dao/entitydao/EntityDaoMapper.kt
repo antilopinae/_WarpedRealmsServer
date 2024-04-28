@@ -18,8 +18,8 @@ class EntityDaoMapper {
         val input_x = request.input_x.toFloat()
         val input_y = request.input_y.toFloat()
         val input_z = request.input_z.toFloat()
-        val mouse_x = request.mouse_x.toFloat()
-        val mouse_y = request.mouse_y.toFloat()
+        val mouse_x = request.input_mouse_x.toFloat()
+        val mouse_y = request.input_mouse_y.toFloat()
         return EntityDao().also {
             it.id = indPlayer
             it.input_x = input_x

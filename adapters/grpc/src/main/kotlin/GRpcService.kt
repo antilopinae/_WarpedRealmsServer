@@ -22,11 +22,11 @@ class GRpcService(
     fun unmapRequest(packClient: HelloRequest): RequestMessage{
         return RequestMessage(
             packClient.token,
-            packClient.message.input.inputX.toByteArray(),
-            packClient.message.input.inputY.toByteArray(),
-            packClient.message.input.inputZ.toByteArray(),
-            packClient.message.input.mouseX.toByteArray(),
-            packClient.message.input.mouseY.toByteArray()
+            packClient.message.input.inputX,
+            packClient.message.input.inputY,
+            packClient.message.input.inputZ,
+            packClient.message.input.mouseX,
+            packClient.message.input.mouseY
         )
     }
 }

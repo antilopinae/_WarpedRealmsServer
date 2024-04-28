@@ -40,8 +40,9 @@ class RenderSystem(
 
     private val bgdLayers = mutableListOf<TiledMapTileLayer>()
     private val fgdLayers = mutableListOf<TiledMapTileLayer>()
-//    private val mapRenderer by lazy { OrthogonalTiledMapRenderer(null, UNIT_SCALE, stage.batch)}
-//    private val orthoCam by lazy { stage.camera as OrthographicCamera}
+
+//    private val mapRenderer by lazy { OrthogonalTiledMapRenderer(null, UNIT_SCALE, stage.batch)} //
+//    private val orthoCam by lazy { stage.camera as OrthographicCamera} //
 
     fun Update(deltaTime: Float) {
 //      println("TIME: ${1 / deltaTime}")
@@ -73,8 +74,9 @@ class RenderSystem(
     fun Dispose() {
         println("[DISPOSE] ${this::class.simpleName}")
         textureAtlas.disposeSafely()
-//        stage.disposeSafely()
-//        mapRenderer.disposeSafely()
+
+//        stage.disposeSafely()//
+//        mapRenderer.disposeSafely()//
     }
     fun resize(width: Int, height: Int){
 //        stage.viewport.update(width,height, true)
@@ -104,13 +106,13 @@ class RenderSystem(
         return false;
     }
     fun Stage.renderTileLayer(list: MutableList<TiledMapTileLayer>){
-        if(list.isNotEmpty()){
+//        if(list.isNotEmpty()){
 //            stage.batch.use(orthoCam.combined){
 //                list.forEach {
 //                    mapRenderer.renderTileLayer(it)
 //                }
 //            }
-        }
+//        }
     }
     companion object{
 //        val stage: Stage by lazy { Stage(ExtendViewport(16f, 9f, 1920f, 1080f)) }

@@ -15,7 +15,6 @@
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/lwjgl3" />
             <option value="$PROJECT_DIR$/processor" />
-            <option value="$PROJECT_DIR$/server" />
           </set>
         </option>
       </GradleProjectSettings>
