@@ -4,25 +4,27 @@ import ServerConnector
 import adapters.grpc.dao.RequestMessage
 import adapters.grpc.dao.ResponseMessage
 import adapters.grpc.server.dao.Observer
+import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.ConcurrentMap
 
 class ServerGameLogicController(
-    val queue_response: ConcurrentLinkedQueue<ConcurrentLinkedQueue<Pair<Observer, ResponseMessage>>>,
-    val queue_request: ConcurrentLinkedQueue<ConcurrentLinkedQueue<Pair<Observer, RequestMessage>>>
+    private val queue_response: ConcurrentLinkedQueue<ConcurrentHashMap<Observer, ConcurrentLinkedQueue<ResponseMessage>>>,
+    private val queue_request: ConcurrentLinkedQueue<ConcurrentHashMap<Observer, ConcurrentLinkedQueue<RequestMessage>>>
 ) {
     private val gameLogicRooms: MutableList<ServerGameLogicRoom> = mutableListOf()
 
     fun CreateGameLogicRoom(
-        queue_response: ConcurrentLinkedQueue<Pair<Observer, ResponseMessage>>,
-        queue_request: ConcurrentLinkedQueue<Pair<Observer, RequestMessage>>
+        queue_response: ConcurrentHashMap<Observer, ConcurrentLinkedQueue<ResponseMessage>>,
+        queue_request: ConcurrentHashMap<Observer, ConcurrentLinkedQueue<RequestMessage>>
     ){
         val room = createGameLogicRoom(queue_response, queue_request)
         gameLogicRooms.add(room)
         startGameLogicRoom(room)
     }
     private fun createGameLogicRoom(
-        queue_response: ConcurrentLinkedQueue<Pair<Observer, ResponseMessage>>,
-        queue_request: ConcurrentLinkedQueue<Pair<Observer, RequestMessage>>
+        queue_response: ConcurrentHashMap<Observer, ConcurrentLinkedQueue<ResponseMessage>>,
+        queue_request: ConcurrentHashMap<Observer, ConcurrentLinkedQueue<RequestMessage>>
     ): ServerGameLogicRoom {
         return ServerGameLogicRoom(queue_response, queue_request)
     }

@@ -30,11 +30,24 @@ class EntityMapperController(
         gamePackage.apply { gamePackageDismapper.MapGamePackage(this, entitiesDao) }
     }
     lateinit var entities: List<EntityDao>
+    var ids: MutableSet<Int> = mutableSetOf()
     fun SetPackage(gamePackage: GamePackage){
 //        entities = gamePackageDismapper.DismapGamePackage(gamePackage)
-        entities = gamePackage.entities
+        ids.clear()
+        entities = gamePackage.entities.filter { entityDao ->
+            val id = entityDao.id
+            if(ids.contains(id))
+            {
+                false
+            }
+            else
+            {
+                ids.add(entityDao.id)
+                true
+            }
+        }
         serverDismapperSystem.DismapEntities(entities)
-        if(entities.size>0)
+        if(entities.size > 0)
             println("[EntMapperController] dismapEntities input_x: ${entities[0].input_x}")
         else
             println("[EntMapperController] dismapEntities size 0")

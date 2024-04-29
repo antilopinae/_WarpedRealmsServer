@@ -6,13 +6,16 @@ import adapters.grpc.server.dao.Observer
 import io.grpc.Server
 import io.grpc.ServerBuilder
 import io.ktor.utils.io.errors.*
+import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.ConcurrentMap
 import java.util.concurrent.Executors
 
 class GRpcServer(
-    val queue_response: ConcurrentLinkedQueue<Pair<Observer, ResponseMessage>>,
-    val queue_request: ConcurrentLinkedQueue<Pair<Observer, RequestMessage>>
-) {
+    private val queue_response: ConcurrentHashMap<Observer, ConcurrentLinkedQueue<ResponseMessage>>,
+    private val queue_request: ConcurrentHashMap<Observer, ConcurrentLinkedQueue<RequestMessage>>
+)
+{
     val connector = GRpcConnector(queue_response, queue_request)
     val controller = GRpcController(connector)
     val server: Server = ServerBuilder.forPort(8000)

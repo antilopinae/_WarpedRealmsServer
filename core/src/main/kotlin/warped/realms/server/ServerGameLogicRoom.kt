@@ -5,12 +5,14 @@ import adapters.grpc.dao.ResponseMessage
 import adapters.grpc.server.dao.Observer
 import warped.realms.server.gamelogic.GameLogicThread
 import warped.realms.server.gamelogic.ServerGameLogic
+import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.ConcurrentMap
 import java.util.concurrent.locks.ReentrantLock
 
 class ServerGameLogicRoom(
-    val queue_response: ConcurrentLinkedQueue<Pair<Observer, ResponseMessage>>,
-    val queue_request: ConcurrentLinkedQueue<Pair<Observer, RequestMessage>>
+    private val queue_response: ConcurrentHashMap<Observer, ConcurrentLinkedQueue<ResponseMessage>>,
+    private val queue_request: ConcurrentHashMap<Observer, ConcurrentLinkedQueue<RequestMessage>>
 )
 {
 //    private val roomsPhysicLogic: ConcurrentLinkedQueue<ServerGameLogic> = ConcurrentLinkedQueue()

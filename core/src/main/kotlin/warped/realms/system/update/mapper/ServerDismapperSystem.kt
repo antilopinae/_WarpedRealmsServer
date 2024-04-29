@@ -53,11 +53,9 @@ class ServerDismapperSystem(
                 println("[DISMAPPER SYSTEM] Dismap entities input_x: ${entitiesDao[i].input_x}")
             }
             else{
-                if(i<1){
-                    spawnEntityEvent.onTick()
-                    entityMappers[i].DismapEntity(entitiesDao[i])
-                    println("spawn and dismap new entity")
-                }
+                spawnEntityEvent.onTick()
+                entityMappers[i].DismapEntity(entitiesDao[i])
+                println("spawn and dismap new entity")
             }
         }
     }

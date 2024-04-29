@@ -10,17 +10,23 @@ import warped.realms.screen.CRAssetManager
 import warped.realms.screen.KeeperGame
 import warped.realms.screen.ScreenEnum
 import warped.realms.screen.ScreenManager
+import warped.realms.server.ConcurrentListMap
 import warped.realms.server.ServerGameLogicBuilder
 import java.lang.System
+import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.ConcurrentMap
+import java.util.concurrent.ConcurrentSkipListMap
+import kotlin.collections.Map
 
 //Игровая логика, работа с server_connector
 class WarpedRealms : KtxGame<KtxScreen>() {
     //private val camera: OrthographicCamera = OrthographicCamera(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
     val keeperGame = KeeperGame.apply { this.game = this@WarpedRealms }
 
-    private val queue_response: ConcurrentLinkedQueue<ConcurrentLinkedQueue<Pair<Observer, ResponseMessage>>> = ConcurrentLinkedQueue()
-    private val queue_request: ConcurrentLinkedQueue<ConcurrentLinkedQueue<Pair<Observer, RequestMessage>>> = ConcurrentLinkedQueue()
+    private val queue_response: ConcurrentLinkedQueue<ConcurrentHashMap<Observer, ConcurrentLinkedQueue<ResponseMessage>>> = ConcurrentLinkedQueue()
+    private val queue_request: ConcurrentLinkedQueue<ConcurrentHashMap<Observer, ConcurrentLinkedQueue<RequestMessage>>> = ConcurrentLinkedQueue()
+
 
 
     override fun create() {
@@ -36,8 +42,10 @@ class WarpedRealms : KtxGame<KtxScreen>() {
         ScreenManager.getInstance().show(ScreenEnum.SERVER_SCREEN)
     }
     fun build(){
-        queue_response.add(ConcurrentLinkedQueue())
-        queue_request.add(ConcurrentLinkedQueue())
+        // add game room
+//        queue_response.add(ConcurrentListMap<ResponseMessage>())
+        queue_response.add(ConcurrentHashMap())
+        queue_request.add(ConcurrentHashMap())
 
         val server = Thread{
             val serverConnector = ServerConnector(queue_response, queue_request)
