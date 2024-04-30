@@ -34,18 +34,34 @@ class GRpcConnector(
         //client sent some message lets add it to queue
         //some actions here
 //        println("${request.input_x} + ${request.input_y}")
-        sendResponses(observer)
+        sendResponses(_observer)
+        clearUnusefulQueue()
     }
-    fun sendResponses(observer: StreamObserver<HelloResponse>){
+    fun sendResponses(observer: Observer){
         if(queue_response.isNotEmpty()){
-            val obs = cachedObservers[observer]!!.first
-            val linkedQueue = queue_response[obs]!!
+            val linkedQueue = queue_response[observer]!!
             if(linkedQueue.size > 0)
             {
                 val response = linkedQueue.poll()
-                observer.onNext(mapResponse(response))
+                observer.observer.onNext(mapResponse(response))
                 linkedQueue.clear()
-                println(response.positions.toList()[0].second.position_x)
+
+                println("[GRpc Connector] SEND RESPONSES with positions: ${response.positions.size}")
+            }
+            else
+            {
+                println("[GRpc Connector] NO MESSAGES")
+            }
+        }
+    }
+    fun clearUnusefulQueue()
+    {
+        queue_response.forEach { _, queue ->
+            if(queue.size > 50)
+            {
+                val el = queue.poll()
+                queue.clear()
+                queue.add(el)
             }
         }
     }
@@ -67,12 +83,13 @@ class GRpcConnector(
             val obs = cachedObservers[observer]!!.first
             queue_request[obs] = request_queues[index]
             queue_response[obs] = response_queues[index]
+            println("ADD OBSERVER TO CACHED OBSERVERS")
         }
         else
         {
             throw Exception("GRPC COnnector: addObserver")
         }
-        println("ADD OBSERVER")
+        println("CONNECTED OBSERVER")
     }
     private fun mapObserver(observer: StreamObserver<HelloResponse>): Observer {
         return Observer(observer)

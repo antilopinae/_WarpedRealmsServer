@@ -44,7 +44,7 @@ class SpawnSystem(
 
     //private val cachedEntity = mutableMapOf<entityType, Entity>()
     private val cachedSizes = mutableMapOf<AnimationModel, Vector2>()
-
+    private var _index = 0
     private fun spawnCfg(type: entityType, posX: Float, posY: Float): Entity = when (type) {
         entityType.PLAYER -> createEntity(
             AnimationModel.FANTAZY_WARRIOR,
@@ -57,8 +57,9 @@ class SpawnSystem(
         ).apply {
             input(this)
         }.also {
-            injectSys<ServerMapperSystem>(systems).PutComponent(EntityMapper(it))
-            injectSys<ServerDismapperSystem>(systems).PutComponent(EntityMapper(it))
+            val mapper = EntityMapper(it).apply { this.index = _index }
+            injectSys<ServerMapperSystem>(systems).PutComponent(mapper)
+            injectSys<ServerDismapperSystem>(systems).PutComponent(mapper)
 
             Logger.debug { "Player has spawned with size: ${size(AnimationModel.FANTAZY_WARRIOR)}!" }
         }
@@ -99,6 +100,7 @@ class SpawnSystem(
                 }
             }
             is EntitySpawnEvent -> {
+                _index = event.Id
                 spawnCfg(event.typeEntity, 1f, 1f)
                 println("Spawn entity")
             }

@@ -14,7 +14,7 @@ class EntityDao{
     lateinit var positions: MutableList<PlayerPosition>
 }
 class PlayerPosition(
-    val name: String,
+    var name: String,
     val pos_x: Float,
     val pos_y: Float
 )

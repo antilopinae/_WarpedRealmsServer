@@ -37,10 +37,12 @@ class ServerGamePackageController(
         val _requests = mapRequests(requests)
 
         val entities = _requests.map { (indObserver, request) ->
-            Entity(indObserver) to entityDaoMapper.MapEntity(request, indObserver)
+            val entity = entityDaoMapper.MapEntity(request, indObserver)
+            println("[ServerPackageController] {PLAYER: ${indObserver}} request input_x: ${entity.input_x}")
+            Entity(indObserver) to entity
         }
         if(entities.size > 0)
-            println("[ServerPackageController] entities in game package size: ${entities.size} element input_x: ${entities[0].second.input_x}")
+            println("[ServerPackageController] entities in game package size: ${entities.size}")
         else
             println("[ServerPackageController] entities in game package size: 0")
         // also need to save it
@@ -66,7 +68,7 @@ class ServerGamePackageController(
 
         if(index_observer != null)
         {
-            requests[index_observer].second.clear().apply {
+            requests[index_observer].second.clear().also {
                 requests[index_observer].second.addAll(listFromQueue(_linkedQueue))
             }
             _linkedQueue.clear()
@@ -75,7 +77,12 @@ class ServerGamePackageController(
         {
             requests.add(_observer to mutableListOf<RequestMessage>())
             hash_requests[_observer] = requests.lastIndex
-            println("[SERVER GAME PACKAGE CONTROLLER] Init new queue for requests")
+            println("[SERVER GAME PACKAGE CONTROLLER] Init new queue for requests INDEX: {${requests.lastIndex}}")
+
+            requests.last().second.clear().also {
+                requests.last().second.addAll(listFromQueue(_linkedQueue))
+            }
+            _linkedQueue.clear()
         }
     }
     private fun getHashResponsesList(
@@ -88,6 +95,7 @@ class ServerGamePackageController(
             while(responses.size-1 < index_observer)
             {
                 responses.add(_observer to mutableListOf())
+                println("[SERVER GAME PACKAGE CONTROLLER]: Added observer with index: {$index_observer}")
             }
         }
         else
@@ -114,15 +122,17 @@ class ServerGamePackageController(
         response.forEach { (entity, entityDao) ->
             val ind = getHashResponsesList(requests[entity.index].first)
             responses[ind].second.clear()
-            responses[ind].second.add(entityDaoMapper.UnmapEntity(entityDao))
+            responses[ind].second.add(entityDaoMapper.UnmapEntity(entityDao, response.map { it.second }))
+            println("[SERVER GAME PACKAGE CONTROLLER]{PLAYER: ${ind}} responses.size: ${responses[ind].second.size}")
         }
-        println(responses.size)
+        println("[SERVER GAME PACKAGE CONTROLLER] response queues.size: ${responses.size}")
 
         if(responses.isNotEmpty())
         {
             queue_response.forEach { (observer, linkedQueue) ->
                 val ind = getHashResponsesList(observer)
                 linkedQueue.addAll(responses[ind].second)
+                println("[SERVER GAME PACKAGE CONTROLLER]{PLAYER: ${ind}} responsesQueue.size: ${linkedQueue.size}")
             }
         }
     }
@@ -132,7 +142,8 @@ class ServerGamePackageController(
     {
         return mutableListOf<Pair<Int, RequestMessage>>().apply {
             hash_requests.forEach { (obs, ind) ->
-                this@apply.addAll(requests[ind].second.map { ind to it })
+                if(requests[ind].second.isNotEmpty())
+                    this@apply.add(ind to requests[ind].second.last())
             }
         }
     }

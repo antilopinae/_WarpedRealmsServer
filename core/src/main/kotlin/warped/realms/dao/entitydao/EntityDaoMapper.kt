@@ -29,7 +29,7 @@ class EntityDaoMapper {
     fun UnmapEntity(entity: EntityDao, entities: List<EntityDao>): ResponseMessage {
         entity.positions.addAll(
             entities.filter { _entity -> _entity.id != entity.id }.map {
-                it.positions[0]
+                it.positions[0].apply { name = it.id.toString() }
             }
         )
         return ResponseMessage(

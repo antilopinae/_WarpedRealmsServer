@@ -18,10 +18,11 @@ class ServerMapperSystem(
     private val entityMappers = mutableListOf<EntityMapper>()
 
     fun GetEntitiesDao() = entitiesDao
+    var _id = 0
     fun Update(deltaTime: Float) {
         entityMappers.forEach { it.Update() }
         entitiesDao.clear()
-        entitiesDao.addAll( entityMappers.map { it.MapEntity().also { it.id = 0 } })
+        entitiesDao.addAll( entityMappers.map { entityMapper -> entityMapper.MapEntity() })
         if(entitiesDao.size > 0)
             println("[MAPPER SYSTEM] entitiesDao size: ${entitiesDao.size} element input_x: ${entitiesDao[0].input_x}, element position_x: ${entitiesDao[0].positions[0].pos_x}")
         else

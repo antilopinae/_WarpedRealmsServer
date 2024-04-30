@@ -82,6 +82,7 @@ class GameLogicThread(
         serverGameLogic.Update(delta)
         serverGameLogic.entityMapperController.GetPackage(game_package)
         serverGamePackageController.SendGamePackage(game_package)
+        println("")
     }
     companion object{
         const val MAX_FPS = 10f

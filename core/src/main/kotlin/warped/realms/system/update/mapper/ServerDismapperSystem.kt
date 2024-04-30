@@ -18,7 +18,7 @@ class ServerDismapperSystem(
     val systems: Systems,
     val factories: Factories
 ) {
-    private val entityMappers = mutableListOf<EntityMapper>()
+    private val entityMappers = mutableMapOf<Int, EntityMapper>()
     private val entitiesDao: MutableList<EntityDao> = mutableListOf()
 
     val spawnEntityEvent: EntitySpawnEvent by lazy {
@@ -28,34 +28,27 @@ class ServerDismapperSystem(
         EntityDespawnEvent(entityType.PLAYER, injectSys<SpawnSystem>(systems))
     }
     fun PutComponent(cmp: EntityMapper) {
-        entityMappers.add(cmp)
+        entityMappers[cmp.index] = cmp
     }
     fun DismapEntities(entities: List<EntityDao>){
         if(entities.isNotEmpty()) {
             this.entitiesDao.clear()
             entitiesDao.addAll(entities)
         }
-//        else{
-//            entitiesDao.add(EntityDao().apply {
-//                this.id = 0
-//                this.input_x = 0f
-//                this.input_y = 0f
-//                this.input_z = 0f
-//                this.mouse_x = 0f
-//                this.mouse_y = 0f
-//            })
-//        }
     }
     fun Update(delta: Float) {
+        var id = 0
         for(i in 0..entitiesDao.size-1){
-            if(entityMappers.size>i){
-                entityMappers[i].DismapEntity(entitiesDao[i])
-                println("[DISMAPPER SYSTEM] Dismap entities input_x: ${entitiesDao[i].input_x}")
+            id = entitiesDao[i].id
+
+            if(entityMappers[id] != null){
+                entityMappers[id]!!.DismapEntity(entitiesDao[i])
+                println("[SERVER DISMAPPER SYSTEM] {PLAYER: ${entitiesDao[i].id}} Dismap entities input_x: ${entitiesDao[i].input_x}")
             }
             else{
-                spawnEntityEvent.onTick()
-                entityMappers[i].DismapEntity(entitiesDao[i])
-                println("spawn and dismap new entity")
+                spawnEntityEvent.also { it.Id = id }.onTick()
+                entityMappers[id]!!.DismapEntity(entitiesDao[i])
+                println("[SERVER DISMAPPER SYSTEM] {PLAYER: ${entitiesDao[i].id}} Spawn and Dismap new entity")
             }
         }
     }

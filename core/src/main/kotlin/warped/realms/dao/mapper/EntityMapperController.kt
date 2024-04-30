@@ -38,7 +38,8 @@ class EntityMapperController(
             val id = entityDao.id
             if(ids.contains(id))
             {
-                false
+                throw Exception("ID Already used")
+                //false
             }
             else
             {
@@ -47,10 +48,10 @@ class EntityMapperController(
             }
         }
         serverDismapperSystem.DismapEntities(entities)
-        if(entities.size > 0)
-            println("[EntMapperController] dismapEntities input_x: ${entities[0].input_x}")
-        else
-            println("[EntMapperController] dismapEntities size 0")
+        entities.forEach {
+            println("[EntMapperController] {PLAYER: ${it.id}} input_x: ${it.input_x}")
+        }
+        println("[EntMapperController] dismapEntities size: ${entities.size}")
     }
     private fun resolvePackages(main_package: GamePackage, local_package: GamePackage){
         // nothing to do
