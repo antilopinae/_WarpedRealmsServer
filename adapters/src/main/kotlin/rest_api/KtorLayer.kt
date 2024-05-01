@@ -5,6 +5,7 @@ import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import module
 
 class KtorLayer {
     //server ktor connect
@@ -23,10 +24,4 @@ class KtorLayer {
             module()
         }.start(wait = true)
     }
-    fun Application.module() =
-        routing {
-            get("/"){
-                call.respond("Hello world")
-            }
-        }
 }

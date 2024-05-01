@@ -1,4 +1,0 @@
-package routing
-
-class UserRouting {
-}
