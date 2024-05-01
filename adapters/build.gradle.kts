@@ -17,6 +17,8 @@ repositories {
 dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     implementation(project(":adapters:grpc"))
+    implementation(project(":adapters:rest"))
+    implementation(project(":adapters:storage"))
 
     implementation("io.ktor:ktor-server-core")
     implementation("io.ktor:ktor-server-host-common")

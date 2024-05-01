@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/adapters" />
             <option value="$PROJECT_DIR$/adapters/grpc" />
             <option value="$PROJECT_DIR$/adapters/rest" />
+            <option value="$PROJECT_DIR$/adapters/storage" />
             <option value="$PROJECT_DIR$/annotation" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/lwjgl3" />

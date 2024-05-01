@@ -1,5 +1,6 @@
 package rest_api
 
+import adapters.rest.module
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
@@ -23,10 +24,4 @@ class KtorLayer {
             module()
         }.start(wait = true)
     }
-    fun Application.module() =
-        routing {
-            get("/"){
-                call.respond("Hello world")
-            }
-        }
 }
