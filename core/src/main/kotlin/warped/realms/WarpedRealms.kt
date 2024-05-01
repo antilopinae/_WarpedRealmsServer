@@ -28,7 +28,6 @@ class WarpedRealms : KtxGame<KtxScreen>() {
     private val queue_request: ConcurrentLinkedQueue<ConcurrentHashMap<Observer, ConcurrentLinkedQueue<RequestMessage>>> = ConcurrentLinkedQueue()
 
 
-
     override fun create() {
         System.setProperty("io.ktor.development", "true")
 

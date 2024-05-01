@@ -85,7 +85,7 @@ class GameLogicThread(
         println("")
     }
     companion object{
-        const val MAX_FPS = 10f
+        const val MAX_FPS = 60f
         const val MAX_FRAME_SKIPS = 4
         const val FRAME_PERIOD = (1000f/ MAX_FPS).toFloat()
     }
