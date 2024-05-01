@@ -16,6 +16,7 @@ import ktx.math.vec2
 import warped.realms.component.TiledComponent
 import warped.realms.system.Logger
 import warped.realms.system.error
+import kotlin.math.absoluteValue
 
 @System
 @Update(10)
@@ -72,12 +73,22 @@ class PhysicSystem(
                 physicCmp.impulse.setZero()
             }
 
+            val (prevX, prevY) = physicCmp.prevPos
             val (bodyX, bodyY) = physicCmp.body!!.position
+
+            var setX = bodyX
+            var setY = bodyY
+
+            if((bodyX-prevX).absoluteValue > 0.001f)
+            {
+                setX = bodyX + (prevX-bodyX)*0.8f
+                setY = bodyY + (prevY-bodyY)*0.8f
+            }
 
             imageCmp.image.run {
                 setPosition(
-                    bodyX - width * 0.5f,
-                    bodyY - height * 0.5f
+                    setX - width * 0.5f,
+                    setY - height * 0.5f
                 )
             }
         }

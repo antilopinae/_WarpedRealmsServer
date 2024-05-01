@@ -25,18 +25,34 @@ class GRpcConnector(
 
     private val cachedObservers: LinkedHashMap<StreamObserver<HelloResponse>, Pair<Observer, Int>> = LinkedHashMap()
 
+    private val responseThread = Thread{
+        while(true)
+        {
+            if(observers.size > 0)
+            {
+                cachedObservers.forEach{ _observer, (observer, index) ->
+                    try{
+                        sendResponses(observer)
+                    }
+                    catch (e: Exception)
+                    {
+                        println(e.stackTraceToString())
+                    }
+                }
+            }
+            clearUnusefulQueue()
+            Thread.sleep((1000f/20).toLong())
+        }
+    }.also { it.start() }
+
     fun getMessage(observer: StreamObserver<HelloResponse>, request: RequestMessage){
         val (_observer, _index) = cachedObservers[observer]!!
         queue_request[_observer]!!.add(request)
 
-//        queue_request.add(mapObserver(observer) to request)
         println("[[GRPC Connector]] Get Message input_x: ${request.input_x}")
         //client sent some message lets add it to queue
-        //some actions here
-//        println("${request.input_x} + ${request.input_y}")
-        sendResponses(_observer)
-        clearUnusefulQueue()
     }
+
     fun sendResponses(observer: Observer){
         if(queue_response.isNotEmpty()){
             val linkedQueue = queue_response[observer]!!
@@ -56,10 +72,11 @@ class GRpcConnector(
     }
     fun clearUnusefulQueue()
     {
-        queue_response.forEach { _, queue ->
+        response_queues.forEach { queue ->
+            println(queue.size)
             if(queue.size > 50)
             {
-                val el = queue.poll()
+                val el = queue.first()
                 queue.clear()
                 queue.add(el)
             }
@@ -67,6 +84,7 @@ class GRpcConnector(
     }
     fun removeObserver(observer: StreamObserver<HelloResponse>){
         observers.remove(observer)
+        cachedObservers.remove(observer)
         println("REMOVE OBSERVER")
     }
     fun addObserver(observer: StreamObserver<HelloResponse>){

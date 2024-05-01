@@ -18,6 +18,7 @@ class GRpcServer(
 {
     val connector = GRpcConnector(queue_response, queue_request)
     val controller = GRpcController(connector)
+
     val server: Server = ServerBuilder.forPort(8000)
         .executor(Executors.newCachedThreadPool())
         .addService(controller)
