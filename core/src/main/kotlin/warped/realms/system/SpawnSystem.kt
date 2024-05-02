@@ -101,7 +101,7 @@ class SpawnSystem(
             }
             is EntitySpawnEvent -> {
                 _index = event.Id
-                spawnCfg(event.typeEntity, 1f, 1f)
+                spawnCfg(event.typeEntity, 15.916667f, 2.7014174f)
                 println("Spawn entity")
             }
             is EntityDespawnEvent -> {

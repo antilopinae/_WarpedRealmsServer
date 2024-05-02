@@ -34,6 +34,6 @@ class ServerGameLogic
         systems.Dispose()
     }
     companion object{
-        const val UNIT_SCALE = 1 / 18f
+        const val UNIT_SCALE = 1 / 24f
     }
 }

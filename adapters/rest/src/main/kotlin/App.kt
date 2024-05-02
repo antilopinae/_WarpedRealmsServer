@@ -1,10 +1,7 @@
 package adapters.rest
 
 import adapters.rest.config.configureDatabase
-import adapters.rest.plugins.configureAuth
-import adapters.rest.plugins.configureRouting
-import adapters.rest.plugins.configureSerialization
-import adapters.rest.plugins.configureStatusPages
+import adapters.rest.plugins.*
 import io.ktor.server.application.*
 
 //engine
@@ -19,4 +16,5 @@ fun Application.module() {
     configureAuth()
     configureStatusPages()
     configureRouting()
+    configureTemplating()
 }
