@@ -25,6 +25,7 @@ dependencies {
     implementation("io.ktor:ktor-server-host-common:$ktorVersion")
     implementation("io.ktor:ktor-server-netty:$ktorVersion")
     implementation("io.ktor:ktor-server-status-pages:$ktorVersion")
+    implementation("io.ktor:ktor-server-freemarker:$ktorVersion")
 
     //exposed orm
     implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
